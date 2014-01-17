@@ -3,7 +3,7 @@ cytoscape.js-panzoom
 
 ## Description
 
-This plugin creates a widget that lets the user pan and zoom about a Cytoscape.js graph.  This complements the built-in gesture support in Cytoscape.js to pan and zoom by giving less savvy users a more traditional UI -- similar to controls on map webapps.
+This plugin creates a widget that lets the user pan and zoom about a Cytoscape.js graph.  This complements the built-in gesture support for panning and zooming in Cytoscape.js by giving less savvy users a more traditional UI -- similar to controls on map webapps.
 
 
 ## Dependencies
