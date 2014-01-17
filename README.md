@@ -5,6 +5,8 @@ cytoscape.js-panzoom
 
 This plugin creates a widget that lets the user pan and zoom about a Cytoscape.js graph.  This complements the built-in gesture support for panning and zooming in Cytoscape.js by giving less savvy users a more traditional UI -- similar to controls on map webapps.
 
+Note that because this plugin is unnecessary on touch devices due to natural gesture support, it is disabled by default on touch devices.  The plugin wouldn't be very useful anyway on touch, because small targets are much harder to use than gestures that can be used anywhere.  As such, the plugin is untested on touch and would probably either need a library like [fastclick](https://github.com/ftlabs/fastclick) or reworking of its event handlers to work.
+
 
 ## Dependencies
 
