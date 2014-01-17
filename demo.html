@@ -1,0 +1,80 @@
+<!DOCTYPE>
+
+<html>
+
+	<head>
+		<title>[jquery.cytoscape.js-panzoom.js] Cytoscape.js Panzoom Widget</title>
+
+		<link href="jquery.cytoscape.js-panzoom.css" rel="stylesheet" type="text/css" />
+		<link href="font-awesome-4.0.3/css/font-awesome.css" rel="stylesheet" type="text/css" />
+
+		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+		<script src="http://cytoscape.github.io/cytoscape.js/api/cytoscape.js-latest/cytoscape.min.js"></script>
+		<script src="jquery.cytoscape.js-panzoom.js"></script>
+
+		<style>
+			body {
+				font-family: helvetica;
+				font-size: 14px;
+			}
+			#cy {
+				width: 600px;
+				height: 600px;
+				border: 1px solid #888;
+			}
+		</style>
+
+		<script>
+			$(function(){
+				$('#cy').cytoscape({
+					style: [
+						{
+							selector: 'node',
+							css: {
+								'content': 'data(name)'
+							}
+						},
+
+						{
+							selector: 'edge',
+							css: {
+								'target-arrow-shape': 'triangle'
+							}
+						}
+					],
+
+					elements: {
+						nodes: [
+							{ data: { id: 'j', name: 'Jerry' } },
+							{ data: { id: 'e', name: 'Elaine' } },
+							{ data: { id: 'k', name: 'Kramer' } },
+							{ data: { id: 'g', name: 'George' } }
+						],
+						edges: [
+							{ data: { source: 'j', target: 'e' } },
+							{ data: { source: 'j', target: 'k' } },
+							{ data: { source: 'j', target: 'g' } },
+							{ data: { source: 'e', target: 'j' } },
+							{ data: { source: 'e', target: 'k' } },
+							{ data: { source: 'k', target: 'j' } },
+							{ data: { source: 'k', target: 'e' } },
+							{ data: { source: 'k', target: 'g' } },
+							{ data: { source: 'g', target: 'j' } }
+						]
+					},
+				});
+
+				$('#cy').cytoscapePanzoom({
+					// options go here
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<h1>[jquery.cytoscape.js-panzoom.js] Cytoscape.js Panzoom Widget Demo</h1>
+
+		<div id="cy"></div>
+	</body>
+
+</html>
