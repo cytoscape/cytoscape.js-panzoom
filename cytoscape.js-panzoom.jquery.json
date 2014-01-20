@@ -1,6 +1,6 @@
 {
 	"name": "cytoscape.js-panzoom",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "A widget that lets the user pan and zoom in a Cytoscape.js graph.",
 	"title": "Cytoscape.js Panzoom Widget",
 	"keywords": [
