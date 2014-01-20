@@ -181,7 +181,7 @@
 
 						cy.zoom({
 							level: level,
-							position: { x: zx, y: zy }
+							renderedPosition: { x: zx, y: zy }
 						});
 					}
 
