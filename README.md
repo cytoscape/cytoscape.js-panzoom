@@ -19,16 +19,15 @@ Note that because this plugin is unnecessary on touch devices due to natural ges
 
 ## Initialisation
 
-You initialise the plugin on the same HTML DOM element container used for Cytoscape.js:
-
 ```js
 
-$('#cy').cytoscape({
+var cy = cytoscape({
+	container: document.getElementById('cy')
 	/* ... */
 });
 
 // the default values of each option are outlined below:
-$('#cy').cytoscapePanzoom({
+var defaults = ({
 	zoomFactor: 0.05, // zoom factor per zoom tick
 	zoomDelay: 45, // how many ms between zoom ticks
 	minZoom: 0.1, // min zoom level
@@ -48,5 +47,10 @@ $('#cy').cytoscapePanzoom({
 	zoomOutIcon: 'fa fa-minus',
 	resetIcon: 'fa fa-expand'
 });
+
+cy.panzoom( defaults );
+
+// or via jquery
+// $('#cy').cytoscapePanzoom( defaults );
 
 ```

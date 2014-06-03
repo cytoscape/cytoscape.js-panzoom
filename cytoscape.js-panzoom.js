@@ -1,4 +1,4 @@
-;(function($){
+;(function($, $$){
 	
 	var defaults = {
 		zoomFactor: 0.05, // zoom factor per zoom tick
@@ -459,5 +459,11 @@
 	};
 
 	$.fn.cyPanzoom = $.fn.cytoscapePanzoom;
+
+  $$('core', 'panzoom', function( options ){
+    var cy = this;
+
+    $( cy.container() ).cytoscapePanzoom( options );
+  });
 	
-})(jQuery);
+})(jQuery, cytoscape);
