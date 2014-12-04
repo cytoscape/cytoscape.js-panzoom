@@ -390,9 +390,7 @@
 							}
 
 							var cy = $container.cytoscape("get");
-							
-							startZooming();
-							zoomInterval = setInterval(function(){
+							var doZoom = function(){
 								var zoom = cy.zoom();
 								var lvl = cy.zoom() * factor;
 								
@@ -411,7 +409,11 @@
 								}
 								
 								zoomTo(lvl);
-							}, options.zoomDelay);
+							};
+
+							startZooming();
+							doZoom();
+							zoomInterval = setInterval(doZoom, options.zoomDelay);
 							
 							return false;
 						});
