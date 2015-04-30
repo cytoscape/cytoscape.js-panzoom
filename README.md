@@ -1,7 +1,7 @@
 cytoscape.js-panzoom
 ====================
 
-![Preview](https://raw2.github.com/cytoscape/cytoscape.js-panzoom/master/img/preview.png)
+![Preview](https://raw.githubusercontent.com/cytoscape/cytoscape.js-panzoom/master/img/preview.png)
 
 ## Description
 
