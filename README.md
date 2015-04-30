@@ -1,5 +1,6 @@
-cytoscape.js-panzoom
-====================
+cytoscape-panzoom
+================================================================================
+
 
 ![Preview](https://raw.githubusercontent.com/cytoscape/cytoscape.js-panzoom/master/img/preview.png)
 
@@ -17,15 +18,37 @@ Note that because this plugin is unnecessary on touch devices due to natural ges
  * Font Awesome 4 (for automatic icons), or you can specify your own class names for icons
 
 
-## Initialisation
+## Usage instructions
+
+Download the library:
+
+ * via npm: `npm install cytoscape-panzoom`,
+ * via bower: `bower install cytoscape-panzoom`, or
+ * via direct download in the repository (probably from a tag).
+
+`require()` the library as appropriate for your project:
+
+CommonJS:
+```js
+var cytoscape = require('cytoscape');
+var panzoom = require('cytoscape-panzoom');
+
+panzoom( cytoscape ); // register extension
+```
+
+AMD:
+```js
+require(['cytoscape', 'cytoscape-panzoom'], function( cytoscape, panzoom ){
+  panzoom( cytoscape ); // register extension
+});
+```
+
+Plain HTML/JS has the extension registered for you automatically, because no `require()` is needed.
+
+
+## API
 
 ```js
-
-var cy = cytoscape({
-	container: document.getElementById('cy')
-	/* ... */
-});
-
 // the default values of each option are outlined below:
 var defaults = ({
 	zoomFactor: 0.05, // zoom factor per zoom tick
@@ -49,8 +72,13 @@ var defaults = ({
 });
 
 cy.panzoom( defaults );
-
-// or via jquery
-// $('#cy').cytoscapePanzoom( defaults );
-
 ```
+
+
+## Publishing instructions
+
+This project is set up to automatically be published to npm and bower.  To publish:
+
+1. Set the version number environment variable: `export VERSION=1.2.3`
+1. Publish: `gulp publish`
+1. If publishing to bower for the first time, you'll need to run `bower register cytoscape-panzoom https://github.com/cytoscape/cytoscape.js-panzoom.git`
