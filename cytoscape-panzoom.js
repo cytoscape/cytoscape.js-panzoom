@@ -5,7 +5,7 @@
     if( !cytoscape ){ return; } // can't register if cytoscape unspecified
 
     $.fn.cyPanzoom = $.fn.cytoscapePanzoom = function( options ){
-      panzoom.apply( this, options );
+      panzoom.apply( this, [ options ] );
             
       return this; // chainability
     };
@@ -14,7 +14,7 @@
     cytoscape('core', 'panzoom', function( options ){ // could use options object, but args are up to you
       var cy = this;
 
-      panzoom.apply( cy.container(), options );
+      panzoom.apply( cy.container(), [ options ] );
 
       return this; // chainability
     });
