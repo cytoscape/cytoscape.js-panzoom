@@ -36,10 +36,10 @@
     autodisableForMobile: true, // disable the panzoom completely for mobile (since we don't really need it with gestures like pinch to zoom)
     
     // icon class names
-    sliderHandleIcon: 'fa fa-minus',
-    zoomInIcon: 'fa fa-plus',
-    zoomOutIcon: 'fa fa-minus',
-    resetIcon: 'fa fa-expand'
+    zoomInIcon: 'fa fa-plus-square-o',
+    zoomOutIcon: 'fa fa-minus-square-o',
+    resetIcon: 'fa fa-refresh',
+    panIcon: 'fa fa-compass'
   };
   
   var panzoom = function(params){
@@ -72,49 +72,34 @@
           
           // add base html elements
           /////////////////////////
-
-          var $zoomIn = $('<div class="ui-cytoscape-panzoom-zoom-in ui-cytoscape-panzoom-zoom-button"><span class="icon '+ options.zoomInIcon +'"></span></div>');
-          $panzoom.append( $zoomIn );
-          
-          var $zoomOut = $('<div class="ui-cytoscape-panzoom-zoom-out ui-cytoscape-panzoom-zoom-button"><span class="icon ' + options.zoomOutIcon + '"></span></div>');
-          $panzoom.append( $zoomOut );
-          
-          var $reset = $('<div class="ui-cytoscape-panzoom-reset ui-cytoscape-panzoom-zoom-button"><span class="icon ' + options.resetIcon + '"></span></div>');
-          $panzoom.append( $reset );
-          
-          var $slider = $('<div class="ui-cytoscape-panzoom-slider"></div>');
-          $panzoom.append( $slider );
-          
-          $slider.append('<div class="ui-cytoscape-panzoom-slider-background"></div>');
-
-          var $sliderHandle = $('<div class="ui-cytoscape-panzoom-slider-handle"><span class="icon ' + options.sliderHandleIcon + '"></span></div>');
-          $slider.append( $sliderHandle );
-          
-          var $noZoomTick = $('<div class="ui-cytoscape-panzoom-no-zoom-tick"></div>');
-          $slider.append( $noZoomTick );
-
-          var $panner = $('<div class="ui-cytoscape-panzoom-panner"></div>');
-          $panzoom.append( $panner );
           
           var $pHandle = $('<div class="ui-cytoscape-panzoom-panner-handle"></div>');
-          $panner.append( $pHandle );
-
-          var $pUp = $('<div class="ui-cytoscape-panzoom-pan-up ui-cytoscape-panzoom-pan-button"></div>');
-          var $pDown = $('<div class="ui-cytoscape-panzoom-pan-down ui-cytoscape-panzoom-pan-button"></div>');
-          var $pLeft = $('<div class="ui-cytoscape-panzoom-pan-left ui-cytoscape-panzoom-pan-button"></div>');
-          var $pRight = $('<div class="ui-cytoscape-panzoom-pan-right ui-cytoscape-panzoom-pan-button"></div>');
-          $panner.append( $pUp ).append( $pDown ).append( $pLeft ).append( $pRight );
+	          var $pIndicator = $('<div class="ui-cytoscape-panzoom-pan-indicator"><i class="fa fa-circle"></i></div>');
+	          var $panner = $('<div class="ui-cytoscape-panzoom-panner"><i class="' + options.panIcon + '"></i></div>');
+	          $pHandle.append($pIndicator).append($panner);
           
-          var $pIndicator = $('<div class="ui-cytoscape-panzoom-pan-indicator"></div>');
-          $panner.append( $pIndicator );
+          var $zoomer = $('<div class="ui-cytoscape-panzoom-zoomer"></div>')
+	          var $slider = $('<div class="ui-cytoscape-panzoom-slider"></div>');
+		          var $sliderHandle = $('<div class="ui-cytoscape-panzoom-slider-handle">&nbsp;</div>');
+		          $slider.append( $sliderHandle );
+	 
+	          var $reset = $('<div class="ui-cytoscape-panzoom-reset"><i class="' + options.resetIcon + '"></i></div>');
+	          var $zoomIn = $('<div class="ui-cytoscape-panzoom-zoom-in"><i class="' + options.zoomInIcon + '"></i></div>');
+	          var $zoomOut = $('<div class="ui-cytoscape-panzoom-zoom-out"><i class="' + options.zoomOutIcon + '"></i></div>');         
           
+	          $zoomer.append( $reset ).append($zoomIn).append($slider).append($zoomOut);
+   
+          $panzoom.append( $pHandle );    
+//          $panzoom.append( $panner );
+          $panzoom.append( $zoomer );
+           
           // functions for calculating panning
           ////////////////////////////////////
 
           function handle2pan(e){
             var v = {
-              x: e.originalEvent.pageX - $panner.offset().left - $panner.width()/2,
-              y: e.originalEvent.pageY - $panner.offset().top - $panner.height()/2
+              x: e.originalEvent.pageX - $pHandle.offset().left - $pHandle.width()/2,
+              y: e.originalEvent.pageY - $pHandle.offset().top - $pHandle.height()/2
             }
             
             var r = options.panDragAreaSize;
@@ -136,8 +121,8 @@
             percent = Math.max( options.panMinPercentSpeed, percent );
             
             var vnorm = {
-              x: -1 * v.x * (percent * options.panDistance),
-              y: -1 * v.y * (percent * options.panDistance)
+              x: v.x * (percent * options.panDistance),
+              y: v.y * (percent * options.panDistance)
             };
             
             return vnorm;
@@ -154,20 +139,17 @@
             var v = pan;
             var d = Math.sqrt( v.x*v.x + v.y*v.y );
             var vnorm = {
-              x: -1 * v.x/d,
-              y: -1 * v.y/d
+              x: v.x/d,
+              y: v.y/d
             };
             
-            var w = $panner.width();
-            var h = $panner.height();
+            var w = $pHandle.width();
+            var h = $pHandle.height();
             var percent = d/options.panDistance;
-            var opacity = Math.max( options.panIndicatorMinOpacity, percent );
-            var color = 255 - Math.round( opacity * 255 );
 
             $pIndicator.show().css({
               left: w/2 * vnorm.x + w/2,
-              top: h/2 * vnorm.y + h/2,
-              background: "rgb(" + color + ", " + color + ", " + color + ")"
+              top: h/2 * vnorm.y + h/2
             });
           }
           
@@ -380,10 +362,10 @@
             var p = Math.log(z) / Math.log(zmax);
             var percent = 1 - (p - x) / (1 - x); // the 1- bit at the front b/c up is in the -ve y direction
             
-            if( percent > 1 || percent < 0 ){
-              $noZoomTick.hide();
-              return;
-            }
+//            if( percent > 1 || percent < 0 ){
+//              $noZoomTick.hide();
+//              return;
+//            }
 
             var min = sliderPadding;
             var max = $slider.height() - $sliderHandle.height() - 2*sliderPadding;
@@ -393,7 +375,7 @@
             if( top < min ){ top = min }
             if( top > max ){ top = max }
 
-            $noZoomTick.css('top', top);
+//            $noZoomTick.css('top', top);
           })();
 
           // set up zoom in/out buttons
@@ -497,3 +479,4 @@
   }
 
 })();
+
