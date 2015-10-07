@@ -49,8 +49,17 @@
     var functions = {
       destroy: function(){
         var $this = $(this);
+        var $pz = $this.find(".cy-panzoom");
 
-        $this.find(".cy-panzoom").remove();
+        $pz.data('winbdgs').forEach(function( l ){
+          $(window).unbind( l.evt, l.fn );
+        });
+
+        $pz.data('cybdgs').forEach(function( l ){
+          $(this).cytoscape('get').off( l.evt, l.fn );
+        });
+
+        $pz.remove();
       },
 
       init: function(){
@@ -59,8 +68,55 @@
         return $(this).each(function(){
           var $container = $(this);
 
+          var winbdgs = [];
+          var $win = $(window);
+
+          var windowBind = function( evt, fn ){
+            winbdgs.push({ evt: evt, fn: fn });
+
+            $win.bind( evt, fn );
+          };
+
+          var windowUnbind = function( evt, fn ){
+            for( var i = 0; i < winbdgs.length; i++ ){
+              var l = winbdgs[i];
+
+              if( l.evt === evt && l.fn === fn ){
+                winbdgs.splice( i, 1 );
+                break;
+              }
+            }
+
+            $win.unbind( evt, fn );
+          };
+
+          var cybdgs = [];
+          var cy = $container.cytoscape('get');
+
+          var cyOn = function( evt, fn ){
+            cybdgs.push({ evt: evt, fn: fn });
+
+            cy.on( evt, fn );
+          };
+
+          var cyOff = function( evt, fn ){
+            for( var i = 0; i < cybdgs.length; i++ ){
+              var l = cybdgs[i];
+
+              if( l.evt === evt && l.fn === fn ){
+                cybdgs.splice( i, 1 );
+                break;
+              }
+            }
+
+            cy.off( evt, fn );
+          };
+
           var $panzoom = $('<div class="cy-panzoom"></div>');
           $container.append( $panzoom );
+
+          $panzoom.data('winbdgs', winbdgs);
+          $panzoom.data('cybdgs', cybdgs);
 
           if( options.zoomOnly ){
             $panzoom.addClass("cy-panzoom-zoom-only");
@@ -141,7 +197,7 @@
 
           function donePanning(){
             clearInterval(panInterval);
-            $(window).unbind("mousemove", handler);
+            windowUnbind("mousemove", handler);
 
             $pIndicator.hide();
           }
@@ -227,14 +283,14 @@
             handler(e);
 
             // update on mousemove
-            $(window).bind("mousemove", handler);
+            windowBind("mousemove", handler);
           });
 
           $pHandle.bind("mouseup", function(){
             donePanning();
           });
 
-          $(window).bind("mouseup blur", function(){
+          windowBind("mouseup blur", function(){
             donePanning();
           });
 
@@ -299,7 +355,7 @@
             $sliderHandle.addClass("active");
 
             var lastMove = 0;
-            $(window).bind('mousemove', sliderMmoveHandler = function( mmEvt ){
+            windowBind('mousemove', sliderMmoveHandler = function( mmEvt ){
               var now = +new Date;
 
               // throttle the zooms every 10 ms so we don't call zoom too often and cause lag
@@ -315,8 +371,8 @@
             });
 
             // unbind when
-            $(window).bind('mouseup', function(){
-              $(window).unbind('mousemove', sliderMmoveHandler);
+            windowBind('mouseup', function(){
+              windowUnbind('mousemove', sliderMmoveHandler);
               sliding = false;
 
               $sliderHandle.removeClass("active");
@@ -358,8 +414,7 @@
 
           positionSliderFromZoom();
 
-          var cy = $container.cytoscape("get");
-          cy.on('zoom', function(){
+          cyOn('zoom', function(){
             if( !sliding ){
               positionSliderFromZoom();
             }
@@ -435,7 +490,7 @@
               return false;
             });
 
-            $(window).bind("mouseup blur", function(){
+            windowBind("mouseup blur", function(){
               clearInterval(zoomInterval);
               endZooming();
             });
