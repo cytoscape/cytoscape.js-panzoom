@@ -1,4 +1,4 @@
-.ui-cytoscape-panzoom {
+.cy-panzoom {
 	position: absolute;
 	font-size: 12px;
 	color: #fff;
@@ -9,7 +9,7 @@
 	z-index: 99999;
 }
 
-.ui-cytoscape-panzoom-zoom-button {
+.cy-panzoom-zoom-button {
 	cursor: pointer;
 	padding: 3px;
 	text-align: center;
@@ -25,76 +25,76 @@
 	z-index: 1;
 }
 
-.ui-cytoscape-panzoom-zoom-button:active,
-.ui-cytoscape-panzoom-slider-handle:active,
-.ui-cytoscape-panzoom-slider-handle.active {
+.cy-panzoom-zoom-button:active,
+.cy-panzoom-slider-handle:active,
+.cy-panzoom-slider-handle.active {
 	background: #ddd;
 }
 
-.ui-cytoscape-panzoom-pan-button {
+.cy-panzoom-pan-button {
 	position: absolute;
 	z-index: 1;
 	height: 16px;
 	width: 16px;
 }
 
-.ui-cytoscape-panzoom-reset {
+.cy-panzoom-reset {
 	top: 55px;
 }
 
-.ui-cytoscape-panzoom-zoom-in {
+.cy-panzoom-zoom-in {
 	top: 80px;
 }
 
-.ui-cytoscape-panzoom-zoom-out {
+.cy-panzoom-zoom-out {
 	top: 197px;
 }
 
-.ui-cytoscape-panzoom-pan-up {
+.cy-panzoom-pan-up {
 	top: 0;
 	left: 50%;
 	margin-left: -5px;
-	width: 0; 
-	height: 0; 
+	width: 0;
+	height: 0;
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
 	border-bottom: 5px solid #666;
 }
 
-.ui-cytoscape-panzoom-pan-down {
+.cy-panzoom-pan-down {
 	bottom: 0;
 	left: 50%;
 	margin-left: -5px;
-	width: 0; 
-	height: 0; 
+	width: 0;
+	height: 0;
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
 	border-top: 5px solid #666;
 }
 
-.ui-cytoscape-panzoom-pan-left {
+.cy-panzoom-pan-left {
 	top: 50%;
 	left: 0;
 	margin-top: -5px;
-	width: 0; 
-	height: 0; 
+	width: 0;
+	height: 0;
 	border-top: 5px solid transparent;
-	border-bottom: 5px solid transparent; 
-	border-right: 5px solid #666; 
+	border-bottom: 5px solid transparent;
+	border-right: 5px solid #666;
 }
 
-.ui-cytoscape-panzoom-pan-right {
+.cy-panzoom-pan-right {
 	top: 50%;
 	right: 0;
 	margin-top: -5px;
-	width: 0; 
-	height: 0; 
+	width: 0;
+	height: 0;
 	border-top: 5px solid transparent;
 	border-bottom: 5px solid transparent;
 	border-left: 5px solid #666;
 }
 
-.ui-cytoscape-panzoom-pan-indicator {
+.cy-panzoom-pan-indicator {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -110,7 +110,7 @@
 	opacity: 0.6;
 }
 
-.ui-cytoscape-panzoom-slider {
+.cy-panzoom-slider {
 	position: absolute;
 	top: 97px;
 	left: 17px;
@@ -118,7 +118,7 @@
 	width: 15px;
 }
 
-.ui-cytoscape-panzoom-slider-background {
+.cy-panzoom-slider-background {
 	position: absolute;
 	top: 0;
 	width: 2px;
@@ -129,7 +129,7 @@
 	border-right: 1px solid #999;
 }
 
-.ui-cytoscape-panzoom-slider-handle {
+.cy-panzoom-slider-handle {
 	position: absolute;
 	width: 16px;
 	height: 8px;
@@ -142,12 +142,12 @@
 	cursor: default;
 }
 
-.ui-cytoscape-panzoom-slider-handle .icon {
+.cy-panzoom-slider-handle .icon {
 	margin: 0 4px;
 	line-height: 10px;
 }
 
-.ui-cytoscape-panzoom-no-zoom-tick {
+.cy-panzoom-no-zoom-tick {
 	position: absolute;
 	background: #666;
 	border: 1px solid #fff;
@@ -160,7 +160,7 @@
 	margin-top: 3px;
 }
 
-.ui-cytoscape-panzoom-panner {
+.cy-panzoom-panner {
 	position: absolute;
 	left: 5px;
 	top: 5px;
@@ -172,7 +172,7 @@
 	margin-left: -1px;
 }
 
-.ui-cytoscape-panzoom-panner-handle {
+.cy-panzoom-panner-handle {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -183,5 +183,19 @@
 	z-index: 999;
 }
 
+.cy-panzoom-zoom-only .cy-panzoom-slider,
+.cy-panzoom-zoom-only .cy-panzoom-panner {
+	display: none;
+}
 
+.cy-panzoom-zoom-only .cy-panzoom-reset {
+	top: 20px;
+}
 
+.cy-panzoom-zoom-only .cy-panzoom-zoom-in {
+	top: 45px;
+}
+
+.cy-panzoom-zoom-only .cy-panzoom-zoom-out {
+	top: 70px;
+}
