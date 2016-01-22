@@ -113,7 +113,8 @@
           };
 
           var $panzoom = $('<div class="cy-panzoom"></div>');
-          $container.append( $panzoom );
+          $container.prepend( $panzoom );
+          $container.css('position', 'absolute'); // must be absolute regardless of stylesheet
 
           $panzoom.data('winbdgs', winbdgs);
           $panzoom.data('cybdgs', cybdgs);
