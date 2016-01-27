@@ -18,5 +18,5 @@
     "cytoscape",
     "cyext"
   ],
-  "license": "LGPL3+"
+  "license": "MIT"
 }
