@@ -22,9 +22,29 @@ SOFTWARE.
 
 ;(function(){ 'use strict';
 
+// outside of the scope of the locally declared $ variale
+// try and grab jQuery from the global variables. If we
+// are in the same scope as a local $ varible it will always
+// be undefined
+var jq; // global jquery instance if available
+if (typeof $ !== 'undefined') { jq = $; }
+
+(function() {
+
+  // assign the global jquery instance to a local $
+  // this may be undefined at this stage
+  var $ = jq;
+
   // registers the extension on a cytoscape lib ref
-  var register = function( cytoscape, $ ){
+  var register = function( cytoscape, jquery ){
     if( !cytoscape ){ return; } // can't register if cytoscape unspecified
+
+    // if a user has passed in a jquery instance to the register
+    // function we are going to assume this is the one they want
+    // to use for the rest of their interactions with the plugin
+    if (jquery) {
+      $ = jquery;
+    }
 
     $.fn.cyPanzoom = $.fn.cytoscapePanzoom = function( options ){
       panzoom.apply( this, [ options ] );
@@ -571,4 +591,5 @@ SOFTWARE.
     register( cytoscape, jQuery || {} );
   }
 
+})();
 })();
