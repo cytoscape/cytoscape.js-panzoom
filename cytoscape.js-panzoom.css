@@ -7,6 +7,7 @@
 	color: #666;
 	font-size: 11px;
 	z-index: 99999;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-zoom-button {
@@ -23,12 +24,14 @@
 	margin-left: -1px;
 	margin-top: -1px;
 	z-index: 1;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-zoom-button:active,
 .cy-panzoom-slider-handle:active,
 .cy-panzoom-slider-handle.active {
 	background: #ddd;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-pan-button {
@@ -36,18 +39,22 @@
 	z-index: 1;
 	height: 16px;
 	width: 16px;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-reset {
 	top: 55px;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-zoom-in {
 	top: 80px;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-zoom-out {
 	top: 197px;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-pan-up {
@@ -59,6 +66,7 @@
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
 	border-bottom: 5px solid #666;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-pan-down {
@@ -70,6 +78,7 @@
 	border-left: 5px solid transparent;
 	border-right: 5px solid transparent;
 	border-top: 5px solid #666;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-pan-left {
@@ -81,6 +90,7 @@
 	border-top: 5px solid transparent;
 	border-bottom: 5px solid transparent;
 	border-right: 5px solid #666;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-pan-right {
@@ -92,6 +102,7 @@
 	border-top: 5px solid transparent;
 	border-bottom: 5px solid transparent;
 	border-left: 5px solid #666;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-pan-indicator {
@@ -108,6 +119,7 @@
 	display: none;
 	z-index: 999;
 	opacity: 0.6;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-slider {
@@ -116,6 +128,7 @@
 	left: 17px;
 	height: 100px;
 	width: 15px;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-slider-background {
@@ -127,6 +140,7 @@
 	background: #fff;
 	border-left: 1px solid #999;
 	border-right: 1px solid #999;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-slider-handle {
@@ -140,11 +154,13 @@
 	z-index: 999;
 	line-height: 8px;
 	cursor: default;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-slider-handle .icon {
 	margin: 0 4px;
 	line-height: 10px;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-no-zoom-tick {
@@ -158,6 +174,7 @@
 	left: 3px;
 	z-index: 1;
 	margin-top: 3px;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-panner {
@@ -170,6 +187,7 @@
 	border: 1px solid #999;
 	border-radius: 40px;
 	margin-left: -1px;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-panner-handle {
@@ -181,6 +199,7 @@
 	width: 40px;
 	position: absolute;
 	z-index: 999;
+	box-sizing: content-box;
 }
 
 .cy-panzoom-zoom-only .cy-panzoom-slider,
