@@ -567,8 +567,8 @@ SOFTWARE.
     });
   }
 
-  if( typeof cytoscape !== 'undefined' ){ // expose to global cytoscape (i.e. window.cytoscape)
-    register( cytoscape, jQuery || {} );
+  if( typeof cytoscape !== 'undefined' && typeof jQuery !== 'undefined' ){ // expose to global cytoscape (i.e. window.cytoscape)
+    register( cytoscape, jQuery );
   }
 
 })();
