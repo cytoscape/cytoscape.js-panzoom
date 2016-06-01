@@ -78,7 +78,7 @@ SOFTWARE.
         });
 
         $pz.data('cybdgs').forEach(function( l ){
-          $(this).cytoscape('get').off( l.evt, l.fn );
+          $this.cytoscape('get').off( l.evt, l.fn );
         });
 
         $pz.remove();
