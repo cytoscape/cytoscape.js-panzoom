@@ -61,6 +61,11 @@ var defaults = {
   panInactiveArea: 8, // radius of inactive area in pan drag box
   panIndicatorMinOpacity: 0.5, // min opacity of pan indicator (the draggable nib); scales from this to 1.0
   zoomOnly: false, // a minimal version of the ui only with zooming (useful on systems with bad mousewheel resolution)
+  fitSelector: undefined, // selector of elements to fit
+  animateOnFit: function(){ // whether to animate on fit
+    return false;
+  },
+  fitAnimationDuration: 1000, // duration of animation on fit
 
   // icon class names
   sliderHandleIcon: 'fa fa-minus',

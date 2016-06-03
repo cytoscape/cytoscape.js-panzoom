@@ -56,6 +56,11 @@ SOFTWARE.
     panInactiveArea: 8, // radius of inactive area in pan drag box
     panIndicatorMinOpacity: 0.5, // min opacity of pan indicator (the draggable nib); scales from this to 1.0
     zoomOnly: false, // a minimal version of the ui only with zooming (useful on systems with bad mousewheel resolution)
+    fitSelector: undefined, // selector of elements to fit
+    animateOnFit: function(){ // whether to animate on fit
+      return false;
+    },
+    fitAnimationDuration: 1000, // duration of animation on fit
 
     // icon class names
     sliderHandleIcon: 'fa fa-minus',
@@ -529,11 +534,26 @@ SOFTWARE.
             }
 
             var cy = $container.cytoscape("get");
-
-            if( cy.elements().size() === 0 ){
+            var elesToFit = options.fitSelector?cy.elements(options.fitSelector):cy.elements();
+            
+            if( elesToFit.size() === 0 ){
               cy.reset();
             } else {
-              cy.fit( options.fitPadding );
+              var animateOnFit = typeof options.animateOnFit === 'function' ? options.animateOnFit.call() : options.animateOnFit;
+              if(animateOnFit){
+                cy.animate({
+                  fit: {
+                    eles: elesToFit,
+                    padding: options.fitPadding
+                  }
+                }, {
+                  duration: options.fitAnimationDuration
+                });
+              }
+              else{
+                cy.fit( elesToFit, options.fitPadding );
+              }
+              
             }
 
             return false;
