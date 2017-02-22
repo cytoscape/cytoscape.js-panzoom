@@ -1,6 +1,6 @@
 {
   "name": "cytoscape-panzoom",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Panzoom extension for Cytoscape.js",
   "main": "cytoscape-panzoom.js",
   "style": "cytoscape.js-panzoom.css",
