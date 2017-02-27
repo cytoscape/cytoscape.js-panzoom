@@ -1,6 +1,5 @@
 {
   "name": "cytoscape-panzoom",
-  "version": "2.4.1",
   "description": "Panzoom extension for Cytoscape.js",
   "main": "cytoscape-panzoom.js",
   "repository": {
@@ -21,6 +20,6 @@
   "license": "MIT",
   "dependencies": {
     "jquery": "^1.4 || ^2.0",
-    "cytoscape": "^2.0"
+    "cytoscape": "^2.0.0 || ^3.0.0"
   }
 }
