@@ -36,8 +36,8 @@ panzoom( cytoscape ); // register extension
 
 AMD:
 ```js
-require(['cytoscape', 'cytoscape-panzoom'], function( cytoscape, panzoom ){
-  panzoom( cytoscape ); // register extension
+require(['cytoscape', 'jquery', 'cytoscape-panzoom'], function( cytoscape, $, panzoom ){
+  panzoom( cytoscape, $ ); // register extension
 });
 ```
 
