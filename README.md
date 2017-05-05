@@ -11,7 +11,7 @@ This extension creates a widget that lets the user pan and zoom about a Cytoscap
 
 ## Dependencies
 
- * jQuery ^1.4 || ^2.0
+ * jQuery ^1.4 || ^2.0 || ^3.0
  * Cytoscape.js ^2.0.0 || ^3.0.0
  * Font Awesome 4 (for automatic icons), or you can specify your own class names for icons
 
@@ -36,8 +36,8 @@ panzoom( cytoscape ); // register extension
 
 AMD:
 ```js
-require(['cytoscape', 'cytoscape-panzoom'], function( cytoscape, panzoom ){
-  panzoom( cytoscape ); // register extension
+require(['cytoscape', 'jquery', 'cytoscape-panzoom'], function( cytoscape, $, panzoom ){
+  panzoom( cytoscape, $ ); // register extension
 });
 ```
 

@@ -24,18 +24,17 @@ SOFTWARE.
 
   // registers the extension on a cytoscape lib ref
   var register = function( cytoscape, $ ){
-    if( !cytoscape ){ return; } // can't register if cytoscape unspecified
+    if( !cytoscape || !$ ){ return; } // can't register if cytoscape or jquery unspecified
 
     $.fn.cyPanzoom = $.fn.cytoscapePanzoom = function( options ){
-      panzoom.apply( this, [ options, $ ] );
+      panzoom.apply( this, [ options, cytoscape, $ ] );
 
       return this; // chainability
     };
 
     // if you want a core extension
     cytoscape('core', 'panzoom', function( options ){ // could use options object, but args are up to you
-      var cy = this;
-      panzoom.apply( this, [ options, $ ] );
+      panzoom.apply( this, [ options, cytoscape, $ ] );
 
       return this; // chainability
     });
@@ -68,7 +67,7 @@ SOFTWARE.
     resetIcon: 'fa fa-expand'
   };
 
-  var panzoom = function( params, $ ){
+  var panzoom = function( params, cytoscape, $ ){
     var cyRef = this;
     var options = $.extend(true, {}, defaults, params);
     var fn = params;
@@ -572,7 +571,9 @@ SOFTWARE.
 
 
   if( typeof module !== 'undefined' && module.exports ){ // expose as a commonjs module
-    module.exports = register;
+    module.exports = function( cytoscape, jquery ){
+      register( cytoscape, jquery || require('jquery') );
+    }
   } else if( typeof define !== 'undefined' && define.amd ){ // expose as an amd/requirejs module
     define('cytoscape-panzoom', function(){
       return register;
