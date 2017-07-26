@@ -1,6 +1,6 @@
 cytoscape-panzoom
 ================================================================================
-
+[![DOI](https://zenodo.org/badge/16007634.svg)](https://zenodo.org/badge/latestdoi/16007634)
 
 ![Preview](https://raw.githubusercontent.com/cytoscape/cytoscape.js-panzoom/master/img/preview.png)
 
@@ -85,3 +85,4 @@ This project is set up to automatically be published to npm and bower.  To publi
 1. Set the version number environment variable: `export VERSION=1.2.3`
 1. Publish: `gulp publish`
 1. If publishing to bower for the first time, you'll need to run `bower register cytoscape-panzoom https://github.com/cytoscape/cytoscape.js-panzoom.git`
+1. Make a release on GitHub to automatically register a new Zenodo DOI
