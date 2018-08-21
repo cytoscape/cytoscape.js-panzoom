@@ -74,7 +74,11 @@ var defaults = {
   resetIcon: 'fa fa-expand'
 };
 
+// add the panzoom control
 cy.panzoom( defaults );
+
+// destroy the panzoom control
+cy.panzoom('destroy');
 ```
 
 
