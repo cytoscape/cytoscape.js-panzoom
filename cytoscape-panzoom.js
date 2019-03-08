@@ -575,7 +575,7 @@ SOFTWARE.
       register( cytoscape, jquery || require('jquery') );
     }
   } else if( typeof define !== 'undefined' && define.amd ){ // expose as an amd/requirejs module
-    define('cytoscape-panzoom', function(){
+    define(function() {
       return register;
     });
   }
