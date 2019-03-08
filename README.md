@@ -32,6 +32,9 @@ var cytoscape = require('cytoscape');
 var panzoom = require('cytoscape-panzoom');
 
 panzoom( cytoscape ); // register extension
+
+// you can pass a custom version of jquery outside of the path
+// panzoom( cytoscape, $ ); // you shouldn't do this in a modern project...
 ```
 
 AMD:
@@ -43,6 +46,7 @@ require(['cytoscape', 'jquery', 'cytoscape-panzoom'], function( cytoscape, $, pa
 
 Plain HTML/JS has the extension registered for you automatically, because no `require()` is needed.
 
+You should either include `cytoscape.js-panzoom.css` (see `style` in `package.json`) or a similar custom stylesheet in your project.
 
 ## API
 
