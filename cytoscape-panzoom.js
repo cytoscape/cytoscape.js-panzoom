@@ -426,7 +426,7 @@ SOFTWARE.
 
             var min = sliderPadding;
             var max = $slider.height() - $sliderHandle.height() - 2*sliderPadding;
-            var top = percent * ( max - min );
+            var top = percent * ( max - min ) + min;
 
             // constrain to slider bounds
             if( top < min ){ top = min }
