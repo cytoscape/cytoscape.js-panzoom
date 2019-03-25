@@ -338,9 +338,10 @@ SOFTWARE.
             }
 
             var padding = sliderPadding;
+			var sliderHandleHeight = $sliderHandle.height();
             var min = 0 + padding;
-            var max = $slider.height() - $sliderHandle.height() - 2*padding;
-            var top = evt.pageY - $slider.offset().top - handleOffset;
+            var max = $slider.height() - sliderHandleHeight - 2*padding;
+            var top = evt.pageY - $slider.offset().top - sliderHandleHeight/2 - handleOffset;
 
             // constrain to slider bounds
             if( top < min ){ top = min }
