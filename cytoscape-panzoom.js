@@ -191,10 +191,14 @@ SOFTWARE.
           // functions for calculating panning
           ////////////////////////////////////
 
+          function isMouseEvent(e) {
+            return e.type.substring(0, 5) === 'mouse';
+          }
+
           function handle2pan(e){
             var v = {
-              x: e.originalEvent.pageX - $panner.offset().left - $panner.width()/2,
-              y: e.originalEvent.pageY - $panner.offset().top - $panner.height()/2
+              x: (isMouseEvent(e) ? e.originalEvent.pageX : e.originalEvent.touches[0].pageX) - $panner.offset().left - $panner.width()/2,
+              y: (isMouseEvent(e) ? e.originalEvent.pageY : e.originalEvent.touches[0].pageY) - $panner.offset().top - $panner.height()/2
             }
 
             var r = options.panDragAreaSize;
@@ -223,9 +227,10 @@ SOFTWARE.
             return vnorm;
           }
 
-          function donePanning(){
+          function donePanning(eventName){
             clearInterval(panInterval);
-            windowUnbind("mousemove", handler);
+            // windowUnbind("mousemove", handler);
+            windowUnbind(eventName, handler);
 
             $pIndicator.hide();
           }
@@ -311,12 +316,26 @@ SOFTWARE.
             windowBind("mousemove", handler);
           });
 
+          $pHandle.bind("touchstart", function(e){
+            handler(e);
+
+            windowBind("touchmove", handler);
+          });
+
           $pHandle.bind("mouseup", function(){
-            donePanning();
+            donePanning("mousemove");
+          });
+
+          $pHandle.bind("touchend", function() {
+            donePanning("touchmove");
           });
 
           windowBind("mouseup blur", function(){
-            donePanning();
+            donePanning("mousemove");
+          });
+
+          windowBind("touchend blur", function() {
+            donePanning("touchmove");
           });
 
 
@@ -326,6 +345,10 @@ SOFTWARE.
 
           $slider.bind('mousedown', function(){
             return false; // so we don't pan close to the slider handle
+          });
+
+          $slider.bind("touchstart", function() {
+            return false;
           });
 
           var sliderVal;
@@ -340,7 +363,9 @@ SOFTWARE.
             var padding = sliderPadding;
             var min = 0 + padding;
             var max = $slider.height() - $sliderHandle.height() - 2*padding;
-            var top = evt.pageY - $slider.offset().top - handleOffset;
+            // if evt is touch
+            var top = (isMouseEvent(evt) ? evt.pageY : evt.touches[0].clientY) - $slider.offset().top - handleOffset;
+            // var top = evt.pageY - $slider.offset().top - handleOffset;
 
             // constrain to slider bounds
             if( top < min ){ top = min }
@@ -407,12 +432,51 @@ SOFTWARE.
             return false;
           });
 
+          sliding = false;
+          var sliderTdownHandler, sliderTmoveHandler;
+          $sliderHandle.bind('touchstart', sliderTdownHandler = function(tsEvt) { // factor code with aboves
+            sliding = true;
+
+            startZooming();
+            $sliderHandle.addClass("active");
+
+            let lastMove = 0;
+            windowBind('touchmove', sliderTmoveHandler = function(tmEvt) {
+              let now = +new Date;
+
+              if (now > lastMove + 10) {
+                lastMove = now;
+              } else {
+                return false;
+              }
+              
+              setSliderFromMouse(tmEvt, 0);
+              return false;
+            });
+            windowBind('touchend', function() {
+              windowUnbind('touchmove', sliderTmoveHandler);
+              sliding = false;
+
+              $sliderHandle.removeClass("active");
+              endZooming();
+            });
+            
+            return false;
+          });
+
           $slider.bind('mousedown', function(e){
             if( e.target !== $sliderHandle[0] ){
               sliderMdownHandler(e);
               setSliderFromMouse(e);
             }
           });
+
+          $slider.bind('touchstart', function(e) {
+            if (e.target !== $sliderHandle[0]) {
+              sliderTdownHandler(e);
+              setSliderFromMouse(e);
+            }
+          })
 
           function positionSliderFromZoom(){
             var z = cyRef.zoom();
@@ -481,7 +545,7 @@ SOFTWARE.
               e.preventDefault();
               e.stopPropagation();
 
-              if( e.button != 0 ){
+              if(e.button != 0 ){
                 return;
               }
 
@@ -513,7 +577,38 @@ SOFTWARE.
               return false;
             });
 
+            $button.bind("touchstart", function(e) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              var doZoom = function() {
+                let zoom = cyRef.zoom();
+                let lvl = cyRef.zoom() * factor;
+
+                if (lvl < options.minZoom) {
+                  lvl = options.minZoom;
+                }
+                if (lvl > options.maxZoom) {
+                  lvl = options.maxZoom;
+                }
+                if ((lvl == options.maxZoom && zoom == options.maxZoom) ||
+                   (lvl == options.minZoom && zoom == options.minZoom)) {
+                     return;
+                }
+                zoomTo(lvl);
+              };
+              startZooming();
+              doZoom();
+              zoomInterval = setInterval(doZoom, options.zoomDelay);
+              return false;
+            });
+
             windowBind("mouseup blur", function(){
+              clearInterval(zoomInterval);
+              endZooming();
+            });
+
+            windowBind("touchend blur", function() {
               clearInterval(zoomInterval);
               endZooming();
             });
@@ -527,7 +622,7 @@ SOFTWARE.
               return;
             }
 
-            var elesToFit = options.fitSelector?cyRef.elements(options.fitSelector):cyRef.elements();
+            let elesToFit = options.fitSelector?cyRef.elements(options.fitSelector):cyRef.elements();
 
             if( elesToFit.size() === 0 ){
               cyRef.reset();
@@ -552,8 +647,31 @@ SOFTWARE.
             return false;
           });
 
+          $reset.bind("touchstart", function(e) {
 
+            let elesToFit = options.fitSelector?cyRef.elements(options.fitSelector):cyRef.elements();
 
+            if (elesToFit.size() === 0) {
+              cyRef.reset();
+            } else {
+              let animateOnFit = typeof options.animateOnFit === 'function' ? options.animateOnFit.call() : options.animateOnFit;
+              if (animateOnFit) {
+                cyRef.animate({
+                  fit: {
+                    eles: elesToFit,
+                    padding: options.fitPadding
+                  }
+                }, {
+                  duration: options.fitAnimationDuring
+                });
+              }
+              else {
+                cyRef.fit(elesToFit, options.fitPadding);
+              }
+            }
+
+            return false;
+          });
         });
       }
     };
