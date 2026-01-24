@@ -21,11 +21,11 @@
   },
   "homepage": "https://github.com/cytoscape/cytoscape.js-panzoom",
   "devDependencies": {
-    "gulp": "^3.8.8",
-    "gulp-jshint": "^1.8.5",
-    "gulp-prompt": "^0.1.1",
+    "gulp": "^5.0.1",
+    "gulp-jshint": "^2.1.0",
+    "gulp-prompt": "^1.2.0",
     "gulp-replace": "^0.4.0",
-    "gulp-shell": "^0.2.9",
+    "gulp-shell": "^0.8.0",
     "jshint-stylish": "^1.0.0",
     "run-sequence": "^1.0.0"
   },
